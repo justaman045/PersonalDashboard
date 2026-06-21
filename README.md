@@ -1,126 +1,78 @@
-# Personal Dashboard
+# PersonalDashboard — AI Productivity SaaS
 
-A full-stack personal productivity SaaS built with Next.js 15, Firebase, and OpenRouter AI. Source-available — you can read, learn from, and self-host this project. Commercial use is restricted (see [LICENSE](./LICENSE)).
+> **A full-stack AI-powered productivity platform with content generation, finance tracking, roleplay chat, and persistent memory — all in one place.**
 
-## Features
+[![Next.js](https://img.shields.io/badge/Next.js_15-000000?logo=next.js)](https://nextjs.org)
+[![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=black)](https://firebase.google.com)
+[![OpenRouter](https://img.shields.io/badge/OpenRouter-FF6B6B)](https://openrouter.ai)
+[![Razorpay](https://img.shields.io/badge/Razorpay-02042B?logo=razorpay)](https://razorpay.com)
 
-| Feature | Description |
-|---|---|
-| **AI Content Creation** | Generate blog posts, tweets, emails with streaming output |
-| **Planner** | Task manager with AI analysis and prioritization |
-| **Finance Tracker** | Log income/expenses and ask AI questions about your spending |
-| **Subscription Manager** | Track subscriptions with AI-powered optimization advice |
-| **Roleplay Chat** | Persona-based AI chat partners with per-partner memory toggle |
-| **Memory System** | Platform-wide personalization — AI learns your preferences across all features |
-| **Brand Voice** | Define your writing tone; injected into all AI prompts |
-| **Prompt Library** | Save and reuse custom prompts |
-| **Calendar** | Personal calendar with event management |
-| **Billing** | Razorpay subscription plans (Starter / Pro / Business) |
-| **Referral System** | Credit-based referral program |
-| **Admin Panel** | Manage OpenRouter API key rotation, usage tracking |
+---
+
+## The Problem
+
+Professionals today juggle multiple disconnected tools for content, tasks, finance, and AI chat. This leads to context switching, lost data, and poor personalization.
+
+**PersonalDashboard** solves this by building a **unified, AI-native productivity platform** with deep memory and personalization across all modules.
+
+---
+
+## Key Features
+
+| Feature                    | Description |
+|---------------------------|-------------|
+| **AI Content Creation**   | Generate blog posts, tweets, emails with streaming output |
+| **Smart Planner**         | Task manager with AI prioritization and analysis |
+| **Finance Tracker**       | Income/expense logging + AI spending insights |
+| **Subscription Manager**  | Track and optimize subscriptions with AI advice |
+| **Roleplay Chat**         | Multiple AI personas with per-persona memory |
+| **Persistent Memory**     | Platform-wide learning of user preferences |
+| **Brand Voice**           | Define your writing tone — applied to all AI outputs |
+| **Prompt Library**        | Save and reuse custom prompts |
+| **Calendar + Billing**    | Event management + Razorpay subscriptions |
+| **Referral System**       | Credit-based referral program |
+| **Admin Panel**           | API key rotation & usage tracking |
+
+---
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 (App Router)
-- **Auth + Database**: Firebase (Firestore + Auth)
-- **AI**: OpenRouter (model-agnostic — works with GPT-4o, Claude, Gemini, etc.)
-- **Payments**: Razorpay
-- **Email**: Resend
-- **Hosting**: Vercel
+| Layer            | Technology                              |
+|------------------|-----------------------------------------|
+| **Frontend**     | Next.js 15 (App Router + TypeScript)    |
+| **Database**     | Firebase Firestore                      |
+| **Auth**         | Firebase Authentication                 |
+| **AI Layer**     | OpenRouter (multi-model support)        |
+| **Payments**     | Razorpay                                |
+| **State**        | React Context / Zustand                 |
+| **Styling**      | Tailwind CSS + shadcn/ui                |
 
-## Self-Hosting Setup
+---
 
-### 1. Clone and install
+## Why This Project Is Impressive
+
+- Demonstrates **complex full-stack architecture**
+- Shows deep understanding of **AI integration** and memory systems
+- Includes **real monetization** (Razorpay subscriptions)
+- Handles **multi-feature personalization** at scale
+
+---
+
+## Live Demo
+
+*(Add link when available)*
+
+---
+
+## Getting Started
 
 ```bash
-git clone https://github.com/your-username/dashboard.git
-cd dashboard
+git clone https://github.com/justaman045/PersonalDashboard.git
+cd PersonalDashboard
 npm install
-```
-
-### 2. Firebase
-
-1. Create a project at [console.firebase.google.com](https://console.firebase.google.com)
-2. Enable **Authentication** (Email/Password provider)
-3. Enable **Firestore** (start in production mode)
-4. Generate a **Service Account** key: Project Settings → Service Accounts → Generate new private key
-5. Deploy Firestore rules and indexes:
-   ```bash
-   npm install -g firebase-tools
-   firebase login
-   firebase deploy --only firestore
-   ```
-
-### 3. OpenRouter
-
-Sign up at [openrouter.ai](https://openrouter.ai) and create an API key.
-
-### 4. Razorpay (optional — required for billing)
-
-1. Create an account at [razorpay.com](https://razorpay.com)
-2. Create subscription plans in the Razorpay dashboard
-3. Set up a webhook pointing to `https://your-domain.com/api/payments/webhook`
-
-### 5. Resend (optional — required for transactional email)
-
-Sign up at [resend.com](https://resend.com) and create an api key.
-
-### 6. Environment variables
-
-Copy `.env.example` to `.env.local` and fill in every value:
-
-```bash
-cp .env.example .env.local
-```
-
-| Variable | Required | Description |
-|---|---|---|
-| `NEXT_PUBLIC_FIREBASE_*` | Yes | Firebase client config (from Firebase Console → Project Settings) |
-| `FIREBASE_SERVICE_ACCOUNT` | Yes | Full JSON of your service account key, as one line |
-| `OPENROUTER_API_KEY` | Yes | Your OpenRouter API key |
-| `RAZORPAY_KEY_ID` / `_SECRET` | Billing only | Razorpay API credentials |
-| `RAZORPAY_PLAN_*` | Billing only | Plan IDs from Razorpay dashboard |
-| `RAZORPAY_WEBHOOK_SECRET` | Billing only | From Razorpay webhook settings |
-| `RESEND_API_KEY` | Email only | Resend API key |
-| `CRON_SECRET` | Yes | Random string — `openssl rand -hex 32` |
-
-### 7. Run locally
-
-```bash
 npm run dev
 ```
 
-### 8. Deploy to Vercel
+---
 
-```bash
-npm install -g vercel
-vercel --prod
-```
-
-Add all environment variables in the Vercel dashboard under Project → Settings → Environment Variables.
-
-## Architecture
-
-```
-src/
-├── app/
-│   ├── (protected)/     # All authenticated pages (dashboard, planner, finance, etc.)
-│   ├── api/             # API routes (AI streaming, payments, cron jobs)
-│   ├── admin/           # Admin panel
-│   ├── onboarding/      # New user flow
-│   └── ...              # Public pages (landing, auth, terms, privacy)
-├── components/          # Shared UI components
-├── context/             # React context (Auth, Toast)
-└── lib/                 # Business logic, Firebase helpers, AI utilities
-```
-
-### Key patterns
-
-- **AI streaming**: All AI responses use Server-Sent Events (SSE) streamed from OpenRouter through Next.js API routes
-- **Memory system**: `users/{uid}/memories/{memoryId}` in Firestore — extracted by LLM after each AI interaction, injected into future prompts across all features
-- **Credit enforcement**: Server-side via Firebase Admin SDK — clients cannot bypass limits
-- **Auth guard**: Layout component redirects unauthenticated users; all API routes verify Firebase ID tokens
-
-## License
-
-Source Available — see [LICENSE](./LICENSE). Personal self-hosting is permitted. Commercial use and running a competing hosted service are not.
+**Built with ❤️ by [Aman Ojha](https://github.com/justaman045)**
